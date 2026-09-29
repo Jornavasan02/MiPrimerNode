@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MiTiendita Web</title>
+    <style>
+        #codigoProducto {
+            font-size: 10px;
+            padding: 5px;
+            width: 250px;
+        }
+        button {
+            font-size: 10px;
+            padding: 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Bienvenido al Punto de Venta</h1>
+
+<input type="text" id="codigoProducto" placeholder="Escanea el código...">
+
+<!-- ES CLAVE QUE EL BOTÓN TENGA ESTE ID -->
+<button id="botonBuscar">🔍</button>
+
+<script>
+    const boton = document.getElementById('botonBuscar');
+    const cajaTexto = document.getElementById('codigoProducto');
+
+    boton.addEventListener('click', () => {
+        const codigo = cajaTexto.value;
+
+        // 1. Enviamos al mensajero a la ruta de tu base de datos
+        fetch('/productosdb')
+            .then(respuesta => respuesta.json()) // 2. Convertimos la respuesta a JSON
+            .then(datos => {
+                // 3. Imprimimos los datos de SQL Server directamente en el navegador
+                console.log("Buscando el código:", codigo);
+                console.log("Datos recibidos de SQL Server:", datos);
+
+                alert("¡Conexión exitosa! Revisa la consola del navegador para ver los productos.");
+            })
+            .catch(error => {
+                console.error("Hubo un error con el mensajero:", error);
+            });
+    });
+</script>
+</body>
+</html>
